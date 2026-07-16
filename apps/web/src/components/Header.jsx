@@ -48,7 +48,7 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="heading-font text-2xl md:text-3xl font-bold text-accent">
+            <span className="display-font text-3xl md:text-4xl font-semibold text-primary tracking-wide">
               {config?.site_title || 'Jéssica Rayane'}
             </span>
           </Link>

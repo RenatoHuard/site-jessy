@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -14,30 +13,41 @@ function ServiceCard({ title, description, icon: Icon, image, featured = false, 
       className="h-full"
     >
       <Card className={`h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl ${
-        featured ? 'bg-accent/10 border-2 border-primary' : 'hover:-translate-y-1'
+        featured ? 'border-2 border-primary' : 'hover:-translate-y-1'
       }`}>
-        {image && (
-          <div className="w-full aspect-video overflow-hidden bg-muted">
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105" 
+
+        {image ? (
+          /* Imagem com título em overlay — estilo editorial */
+          <div className="relative w-full aspect-[4/3] overflow-hidden shrink-0">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
             />
-          </div>
-        )}
-        <CardHeader className={image ? "pt-6" : ""}>
-          {Icon && !image && (
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-              featured ? 'bg-primary text-primary-foreground' : 'bg-secondary/20 text-secondary'
-            }`}>
-              <Icon className="h-6 w-6" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5">
+              <CardTitle className="display-font text-xl md:text-2xl text-white leading-snug">
+                {title}
+              </CardTitle>
             </div>
-          )}
-          <CardTitle className="heading-font text-xl md:text-2xl text-foreground">
-            {title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex-1 flex flex-col">
+          </div>
+        ) : (
+          /* Sem imagem — ícone + título padrão */
+          <CardHeader>
+            {Icon && (
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                featured ? 'bg-primary text-primary-foreground' : 'bg-accent/10 text-accent'
+              }`}>
+                <Icon className="h-6 w-6" />
+              </div>
+            )}
+            <CardTitle className="heading-font text-xl md:text-2xl text-foreground">
+              {title}
+            </CardTitle>
+          </CardHeader>
+        )}
+
+        <CardContent className={`flex-1 flex flex-col ${image ? 'pt-5' : ''}`}>
           <CardDescription className="leading-relaxed mb-8 flex-1 text-muted-foreground text-base">
             {description}
           </CardDescription>

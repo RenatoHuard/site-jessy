@@ -107,7 +107,7 @@ function HomePage({ previewData }) {
             <span className="inline-block py-1 px-3 rounded-full bg-accent/20 text-accent-foreground font-medium text-sm tracking-wider uppercase mb-6 border border-accent/30 backdrop-blur-sm">
               Bem-vinda ao meu universo
             </span>
-            <h1 className="heading-font text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight mb-6" style={{ letterSpacing: '-0.02em', textWrap: 'balance' }}>
+            <h1 className="display-font text-6xl md:text-8xl lg:text-9xl font-semibold text-foreground leading-tight mb-6" style={{ textWrap: 'balance' }}>
               {heroTitle}
             </h1>
           </motion.div>
@@ -225,7 +225,7 @@ function HomePage({ previewData }) {
                 </Button>
               )}
               {ctaBtn2Text && (
-                <Button asChild variant="outline" size="lg" className="h-14 px-10 text-lg border-2 border-background/30 text-background hover:bg-background/10 transition-all duration-200 active:scale-[0.98]">
+                <Button asChild variant="outline" size="lg" className="h-14 px-10 text-lg bg-transparent border-2 border-white/50 text-white hover:bg-white/15 hover:text-white transition-all duration-200 active:scale-[0.98]">
                   <Link to={ctaBtn2Link}>{ctaBtn2Text}</Link>
                 </Button>
               )}

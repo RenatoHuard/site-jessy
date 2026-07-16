@@ -93,8 +93,8 @@ function SobrePage({ previewData }) {
             transition={{ duration: 0.8 }}
           >
             <h1
-              className="heading-font text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
-              style={{ letterSpacing: '-0.02em', textWrap: 'balance' }}
+              className="display-font text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground leading-tight mb-6"
+              style={{ textWrap: 'balance' }}
               dangerouslySetInnerHTML={{ __html: heroTitle.replace('\n', '<br/>') }}
             />
           </motion.div>
@@ -119,7 +119,7 @@ function SobrePage({ previewData }) {
             transition={{ duration: 0.8 }}
           >
             <Quote className="h-12 w-12 mx-auto mb-8 text-accent opacity-90" />
-            <h2 className="heading-font text-3xl md:text-5xl lg:text-6xl font-medium italic leading-tight mb-8" style={{ textWrap: 'balance' }}>
+            <h2 className="display-font text-3xl md:text-5xl lg:text-6xl font-medium italic leading-tight mb-8" style={{ textWrap: 'balance' }}>
               "{fraseText}"
             </h2>
             {fraseAttribution && (
