@@ -76,11 +76,12 @@ function ServicesPage({ previewData }) {
 
           <SectionDivider className="mb-16" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap gap-8 justify-center items-start">
             {servicesList.map((service, index) => {
               const IconComponent = iconMap[service.icon] || Sparkles;
+              const hasImage = !!service.image;
               return (
-                <div key={index} className={index === 0 || index === 5 ? "md:col-span-2 lg:col-span-2" : "col-span-1"}>
+                <div key={index} className={hasImage ? 'shrink-0' : 'flex-1 min-w-[280px] max-w-sm'}>
                   <ServiceCard
                     title={service.title}
                     description={service.description}
@@ -88,6 +89,7 @@ function ServicesPage({ previewData }) {
                     image={service.image}
                     featured={service.featured}
                     delay={index * 0.1}
+                    naturalWidth={hasImage}
                   />
                 </div>
               );
