@@ -10,11 +10,9 @@ dist/
 # Environment variables (NUNCA subir isso para o GitHub)
 .env
 .env.local
-.env.production
 .env.development
-**/. env
+**/.env
 **/.env.local
-**/.env.production
 **/.env.development
 
 # Logs
