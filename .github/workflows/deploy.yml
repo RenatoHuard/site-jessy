@@ -27,9 +27,6 @@ jobs:
       - name: Build do frontend
         working-directory: apps/web
         run: npm run build
-        env:
-          # Adicione aqui as variáveis de ambiente públicas do frontend
-          # VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
       - name: Deploy via FTP para Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
