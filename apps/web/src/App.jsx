@@ -17,6 +17,7 @@ import CommunityPage from './pages/CommunityPage.jsx';
 import MembersDashboard from './pages/members/MembersDashboard.jsx';
 import MembersProfile from './pages/members/MembersProfile.jsx';
 import { Toaster } from '@/components/ui/sonner';
+import { UpdateBanner } from './components/UpdateBanner.jsx';
 import {
   useInitializeDatabase,
   useExtractSobreContent,
@@ -37,6 +38,7 @@ import AdminConfigPage from './pages/admin/AdminConfigPage.jsx';
 
 const MainLayout = ({ children }) => (
   <div className="min-h-screen flex flex-col">
+    <UpdateBanner />
     <Header />
     <main className="flex-1">
       {children}

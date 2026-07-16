@@ -180,7 +180,7 @@ function HomePage({ previewData }) {
               <ul className="space-y-4">
                 {['Conexão autêntica', 'Troca de experiências', 'Crescimento mútuo'].map((item, i) => (
                   <li key={i} className="flex items-center text-foreground font-medium">
-                    <CheckCircle2 className="h-5 w-5 text-secondary mr-3" /> {item}
+                    <CheckCircle2 className="h-5 w-5 text-accent mr-3" /> {item}
                   </li>
                 ))}
               </ul>
