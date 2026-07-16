@@ -1,0 +1,45 @@
+name: Build e Deploy para Hostinger
+
+on:
+  push:
+    branches:
+      - main  # Dispara a cada push na branch main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Instalar dependências do frontend
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Build do frontend
+        working-directory: apps/web
+        run: npm run build
+        env:
+          # Adicione aqui as variáveis de ambiente públicas do frontend
+          # VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: Deploy via FTP para Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/apps/web/
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
