@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
@@ -40,6 +40,18 @@ const AdminServicesPage = lazy(() => import('./pages/admin/AdminServicesPage.jsx
 const AdminSobrePage = lazy(() => import('./pages/admin/AdminSobrePage.jsx'));
 const AdminContatoPage = lazy(() => import('./pages/admin/AdminContatoPage.jsx'));
 const AdminConfigPage = lazy(() => import('./pages/admin/AdminConfigPage.jsx'));
+
+const AuthRedirectHandler = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    if (params.get('type') === 'recovery' && params.get('access_token')) {
+      navigate('/reset-password' + window.location.hash, { replace: true });
+    }
+  }, []);
+  return null;
+};
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -105,6 +117,7 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
+        <AuthRedirectHandler />
         <AdminAutoSync />
         <Suspense fallback={<PageLoader />}>
           <Routes>
