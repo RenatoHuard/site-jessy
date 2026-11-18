@@ -5,6 +5,7 @@ import { LayoutDashboard, Home, Briefcase, User, Mail, Settings, LogOut, Menu, X
 import { useAuth } from '@/contexts/AuthContext.jsx';
 import { useSiteConfig } from '@/hooks/useSiteConfig.js';
 import { Button } from '@/components/ui/button';
+import { UpdateBanner } from '@/components/UpdateBanner.jsx';
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row overflow-hidden">
+      <UpdateBanner />
       {/* Mobile Header */}
       <div className="md:hidden bg-card border-b border-border p-4 flex items-center justify-between z-20">
         <span className="font-bold heading-font text-xl text-primary">Admin Panel</span>

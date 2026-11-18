@@ -93,11 +93,14 @@ function HomePage({ previewData }) {
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[90dvh] flex items-center justify-center overflow-hidden bg-foreground">
         <div className="absolute inset-0">
-          <img 
-            src={heroImg} 
-            alt="Hero Background" 
+          <img
+            src={heroImg}
+            alt="Hero Background"
             className={`w-full h-full object-cover object-top ${data?.hero_parallax ? 'fixed' : ''}`}
             style={{ opacity: (100 - heroOverlayOpacity) / 100 }}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" style={{ opacity: heroOverlayOpacity / 100 }} />
         </div>
@@ -120,10 +123,12 @@ function HomePage({ previewData }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-square">
-                <img 
-                  src={presImg} 
-                  alt={presTitle} 
+                <img
+                  src={presImg}
+                  alt={presTitle}
                   className={`w-full h-full object-cover object-top ${data?.presentation_parallax ? 'fixed' : ''}`}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
               </div>
@@ -187,10 +192,12 @@ function HomePage({ previewData }) {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="order-1 lg:order-2">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-square">
-                <img 
-                  src={commImg} 
-                  alt={commTitle} 
+                <img
+                  src={commImg}
+                  alt={commTitle}
                   className={`w-full h-full object-cover object-top ${data?.community_parallax ? 'fixed' : ''}`}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
               </div>
@@ -202,10 +209,12 @@ function HomePage({ previewData }) {
       {/* 5. CTA SECTION */}
       <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img 
-            src={ctaImg} 
-            alt="Call to action background" 
+          <img
+            src={ctaImg}
+            alt="Call to action background"
             className={`w-full h-full object-cover object-top ${data?.cta_parallax ? 'fixed' : ''}`}
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-foreground/80" />
         </div>

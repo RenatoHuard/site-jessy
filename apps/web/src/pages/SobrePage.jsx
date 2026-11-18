@@ -77,11 +77,14 @@ function SobrePage({ previewData }) {
       {/* SECTION 1 - HERO/INTRO */}
       <section className="relative min-h-[70dvh] flex items-center justify-center overflow-hidden bg-foreground">
         <div className="absolute inset-0">
-          <img 
-            src={heroImg} 
-            alt="Hero Background" 
+          <img
+            src={heroImg}
+            alt="Hero Background"
             className={`w-full h-full object-cover object-top ${heroParallax}`}
             style={{ opacity: (100 - heroOverlayOpacity) / 100 }}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" style={{ opacity: heroOverlayOpacity / 100 }} />
         </div>
@@ -104,10 +107,12 @@ function SobrePage({ previewData }) {
       {/* SECTION 2 - QUOTE (Frase em Destaque) */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img 
-            src={fraseImg} 
-            alt="Quote Background" 
+          <img
+            src={fraseImg}
+            alt="Quote Background"
             className={`w-full h-full object-cover object-top ${fraseParallax}`}
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-black/70" />
         </div>
@@ -137,10 +142,12 @@ function SobrePage({ previewData }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-square">
-                <img 
-                  src={jornadaImg} 
-                  alt="Jornada" 
+                <img
+                  src={jornadaImg}
+                  alt="Jornada"
                   className={`w-full h-full object-cover object-top ${jornadaParallax}`}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
               </div>
@@ -198,24 +205,30 @@ function SobrePage({ previewData }) {
             >
               <div className="grid grid-cols-2 gap-4 md:gap-6">
                 <div className="col-span-2 md:col-span-1 md:row-span-2 rounded-2xl overflow-hidden shadow-lg aspect-[3/4] md:aspect-auto relative">
-                  <img 
-                    src={conhImg1} 
-                    alt="Conhecimento 1" 
+                  <img
+                    src={conhImg1}
+                    alt="Conhecimento 1"
                     className={`w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ${conhParallax1}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="col-span-1 rounded-2xl overflow-hidden shadow-lg aspect-square relative">
-                  <img 
-                    src={conhImg2} 
-                    alt="Conhecimento 2" 
+                  <img
+                    src={conhImg2}
+                    alt="Conhecimento 2"
                     className={`w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ${conhParallax2}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="col-span-1 rounded-2xl overflow-hidden shadow-lg aspect-square relative">
-                  <img 
-                    src={conhImg3} 
-                    alt="Conhecimento 3" 
+                  <img
+                    src={conhImg3}
+                    alt="Conhecimento 3"
                     className={`w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ${conhParallax3}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

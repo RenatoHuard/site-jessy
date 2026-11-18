@@ -24,6 +24,8 @@ function ServiceCard({ title, description, icon: Icon, image, featured = false, 
               src={image}
               alt={title}
               className="max-h-72 w-auto block transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         )}

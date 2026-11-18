@@ -24,5 +24,16 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL || SUPABASE_URL),
       'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY || SUPABASE_ANON_KEY),
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-ui': ['framer-motion', 'lucide-react', '@radix-ui/react-slot'],
+            'vendor-supabase': ['@supabase/supabase-js'],
+          },
+        },
+      },
+    },
   };
 });

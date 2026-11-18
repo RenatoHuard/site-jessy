@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -7,15 +7,6 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
-import ServicesPage from './pages/ServicesPage.jsx';
-import SobrePage from './pages/SobrePage.jsx';
-import ContatoPage from './pages/ContatoPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import SignupPage from './pages/SignupPage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-import CommunityPage from './pages/CommunityPage.jsx';
-import MembersDashboard from './pages/members/MembersDashboard.jsx';
-import MembersProfile from './pages/members/MembersProfile.jsx';
 import { Toaster } from '@/components/ui/sonner';
 import { UpdateBanner } from './components/UpdateBanner.jsx';
 import {
@@ -26,15 +17,38 @@ import {
   useExtractSiteConfig,
 } from '@/hooks/useDatabaseSync.js';
 
-// Admin Pages
-import AdminLayout from './components/admin/AdminLayout.jsx';
-import AdminLoginPage from './pages/admin/AdminLoginPage.jsx';
-import AdminDashboard from './pages/admin/AdminDashboard.jsx';
-import AdminHomePage from './pages/admin/AdminHomePage.jsx';
-import AdminServicesPage from './pages/admin/AdminServicesPage.jsx';
-import AdminSobrePage from './pages/admin/AdminSobrePage.jsx';
-import AdminContatoPage from './pages/admin/AdminContatoPage.jsx';
-import AdminConfigPage from './pages/admin/AdminConfigPage.jsx';
+// Lazy-loaded public pages
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage.jsx'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage.jsx'));
+const SobrePage = lazy(() => import('./pages/SobrePage.jsx'));
+const ContatoPage = lazy(() => import('./pages/ContatoPage.jsx'));
+const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
+const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage.jsx'));
+
+// Lazy-loaded member pages
+const MembersDashboard = lazy(() => import('./pages/members/MembersDashboard.jsx'));
+const MembersProfile = lazy(() => import('./pages/members/MembersProfile.jsx'));
+
+// Lazy-loaded admin pages
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout.jsx'));
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage.jsx'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'));
+const AdminHomePage = lazy(() => import('./pages/admin/AdminHomePage.jsx'));
+const AdminServicesPage = lazy(() => import('./pages/admin/AdminServicesPage.jsx'));
+const AdminSobrePage = lazy(() => import('./pages/admin/AdminSobrePage.jsx'));
+const AdminContatoPage = lazy(() => import('./pages/admin/AdminContatoPage.jsx'));
+const AdminConfigPage = lazy(() => import('./pages/admin/AdminConfigPage.jsx'));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="animate-pulse flex flex-col items-center">
+      <div className="w-12 h-12 rounded-full bg-primary/20 mb-4"></div>
+      <div className="text-muted-foreground font-medium">Carregando...</div>
+    </div>
+  </div>
+);
 
 const MainLayout = ({ children }) => (
   <div className="min-h-screen flex flex-col">
@@ -92,54 +106,57 @@ function App() {
       <Router>
         <ScrollToTop />
         <AdminAutoSync />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
-          <Route path="/servicos" element={<MainLayout><ServicesPage /></MainLayout>} />
-          <Route path="/sobre" element={<MainLayout><SobrePage /></MainLayout>} />
-          <Route path="/contato" element={<MainLayout><ContatoPage /></MainLayout>} />
-          
-          {/* Auth Routes */}
-          <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
-          <Route path="/register" element={<MainLayout><SignupPage /></MainLayout>} />
-          <Route path="/signup" element={<Navigate to="/register" replace />} />
-          
-          {/* Protected Member Routes */}
-          <Route path="/members/dashboard" element={
-            <ProtectedRoute requireMember={true}>
-              <MainLayout><MembersDashboard /></MainLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/members/profile" element={
-            <ProtectedRoute requireMember={true}>
-              <MainLayout><MembersProfile /></MainLayout>
-            </ProtectedRoute>
-          } />
-          
-          {/* Legacy Protected Routes */}
-          <Route path="/profile" element={<Navigate to="/members/profile" replace />} />
-          <Route path="/community" element={<Navigate to="/members/dashboard" replace />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          
-          <Route path="/admin" element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<AdminDashboard />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="home" element={<AdminHomePage />} />
-            <Route path="services" element={<AdminServicesPage />} />
-            <Route path="sobre" element={<AdminSobrePage />} />
-            <Route path="contato" element={<AdminContatoPage />} />
-            <Route path="config" element={<AdminConfigPage />} />
-          </Route>
-          
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+            <Route path="/servicos" element={<MainLayout><ServicesPage /></MainLayout>} />
+            <Route path="/sobre" element={<MainLayout><SobrePage /></MainLayout>} />
+            <Route path="/contato" element={<MainLayout><ContatoPage /></MainLayout>} />
+
+            {/* Auth Routes */}
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+            <Route path="/register" element={<MainLayout><SignupPage /></MainLayout>} />
+            <Route path="/signup" element={<Navigate to="/register" replace />} />
+
+            {/* Protected Member Routes */}
+            <Route path="/members/dashboard" element={
+              <ProtectedRoute requireMember={true}>
+                <MainLayout><MembersDashboard /></MainLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/members/profile" element={
+              <ProtectedRoute requireMember={true}>
+                <MainLayout><MembersProfile /></MainLayout>
+              </ProtectedRoute>
+            } />
+
+            {/* Legacy Protected Routes */}
+            <Route path="/profile" element={<Navigate to="/members/profile" replace />} />
+            <Route path="/community" element={<Navigate to="/members/dashboard" replace />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+
+            <Route path="/admin" element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="home" element={<AdminHomePage />} />
+              <Route path="services" element={<AdminServicesPage />} />
+              <Route path="sobre" element={<AdminSobrePage />} />
+              <Route path="contato" element={<AdminContatoPage />} />
+              <Route path="config" element={<AdminConfigPage />} />
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
         <Toaster position="top-right" />
       </Router>
     </AuthProvider>

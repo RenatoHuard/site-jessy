@@ -101,5 +101,20 @@ export const fetchProfile = async (userId) => {
   }
 };
 
+export const authUpdatePassword = async (accessToken, newPassword) => {
+  const res = await window.fetch(`${SUPABASE_URL}/auth/v1/user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ password: newPassword }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error_description || 'Erro ao atualizar senha');
+  return data;
+};
+
 // Exporta getValidSession para uso no dbClient
 export { getValidSession };
