@@ -41,17 +41,6 @@ const AdminSobrePage = lazy(() => import('./pages/admin/AdminSobrePage.jsx'));
 const AdminContatoPage = lazy(() => import('./pages/admin/AdminContatoPage.jsx'));
 const AdminConfigPage = lazy(() => import('./pages/admin/AdminConfigPage.jsx'));
 
-const AuthRedirectHandler = () => {
-  useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    if (params.get('type') === 'recovery' && params.get('access_token')) {
-      window.location.replace('/reset-password' + window.location.hash);
-    }
-  }, []);
-  return null;
-};
-
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="animate-pulse flex flex-col items-center">
@@ -116,7 +105,6 @@ function App() {
     <AuthProvider>
       <Router>
         <ScrollToTop />
-        <AuthRedirectHandler />
         <AdminAutoSync />
         <Suspense fallback={<PageLoader />}>
           <Routes>
