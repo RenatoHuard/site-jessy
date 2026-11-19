@@ -300,7 +300,7 @@ export default function AdminRespiraPage() {
                 </Link>
               )}
               <button
-                onClick={save}
+                onClick={() => save()}
                 disabled={saving}
                 className="flex items-center gap-1.5 px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
@@ -396,7 +396,7 @@ export default function AdminRespiraPage() {
 
           <div className="flex justify-end pb-8">
             <button
-              onClick={save}
+              onClick={() => save()}
               disabled={saving}
               className="flex items-center gap-2 px-8 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >

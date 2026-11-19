@@ -114,7 +114,7 @@ export default function AdminRespiraConfigPage() {
       {/* Footer fixo fora do scroll */}
       <div className="flex justify-end p-4 flex-shrink-0" style={{ borderTop: '1px solid #3D1F14', background: '#0F0704' }}>
         <button
-          onClick={save}
+          onClick={() => save()}
           disabled={saving}
           className="flex items-center gap-2 px-8 py-2.5 rounded-lg font-medium text-sm transition-colors disabled:opacity-50"
           style={{ background: '#C4634A', color: 'white' }}
