@@ -1,7 +1,35 @@
 import { useState, useEffect } from 'react';
 import { dbGet } from '@/lib/dbClient';
 
-function hexToHSL(hex) {
+const GOOGLE_FONTS_MAP = {
+  'Roboto': 'Roboto:wght@300;400;500;700',
+  'Inter': 'Inter:wght@300;400;500;700',
+  'Poppins': 'Poppins:wght@300;400;500;700',
+  'Lato': 'Lato:wght@300;400;700',
+  'Nunito': 'Nunito:wght@300;400;500;700',
+  'Open Sans': 'Open+Sans:wght@300;400;500;700',
+  'Dancing Script': 'Dancing+Script:wght@400;600;700',
+  'Great Vibes': 'Great+Vibes',
+  'Pacifico': 'Pacifico',
+  'Sacramento': 'Sacramento',
+  'Satisfy': 'Satisfy',
+  'Cormorant Garamond': 'Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400',
+};
+
+export function ensureFontLoaded(fontName) {
+  if (!fontName) return;
+  const id = `gf-${fontName.replace(/\s+/g, '-').toLowerCase()}`;
+  if (document.getElementById(id)) return;
+  const param = GOOGLE_FONTS_MAP[fontName];
+  if (!param) return;
+  const link = document.createElement('link');
+  link.id = id;
+  link.rel = 'stylesheet';
+  link.href = `https://fonts.googleapis.com/css2?family=${param}&display=swap`;
+  document.head.appendChild(link);
+}
+
+export function hexToHSL(hex) {
   if (!hex) return null;
   hex = hex.replace(/#/g, '');
   if (hex.length === 3) {
@@ -27,7 +55,7 @@ function hexToHSL(hex) {
   return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
 }
 
-function getContrastForeground(hex) {
+export function getContrastForeground(hex) {
   if (!hex) return '0 0% 98%';
   hex = hex.replace(/#/g, '');
   if (hex.length === 3) hex = hex.split('').map(h => h + h).join('');
@@ -63,6 +91,14 @@ export function useSiteConfig() {
           document.documentElement.style.setProperty('--accent', hexToHSL(record.accent_color));
           document.documentElement.style.setProperty('--accent-foreground', getContrastForeground(record.accent_color));
           document.documentElement.style.setProperty('--ring', hexToHSL(record.accent_color));
+        }
+        if (record.body_font) {
+          ensureFontLoaded(record.body_font);
+          document.documentElement.style.setProperty('--body-font', `'${record.body_font}', sans-serif`);
+        }
+        if (record.name_font) {
+          ensureFontLoaded(record.name_font);
+          document.documentElement.style.setProperty('--name-font-family', `'${record.name_font}', cursive`);
         }
       } catch (error) {
         console.error('Error fetching site config:', error);

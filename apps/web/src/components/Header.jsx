@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut, Settings, LayoutDashboard } from 'lucide-react';
+import { Menu, X, User, LogOut, Settings, LayoutDashboard, Wind } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext.jsx';
 import { useSiteConfig } from '@/hooks/useSiteConfig.js';
@@ -48,7 +48,7 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="display-font text-3xl md:text-4xl font-semibold text-primary tracking-wide">
+            <span className="name-font text-3xl md:text-4xl text-primary">
               {config?.site_title || 'Jéssica Rayane'}
             </span>
           </Link>
@@ -70,6 +70,17 @@ function Header() {
                 )}
               </Link>
             ))}
+            <Link
+              to="/respira-preta"
+              className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-full border transition-all duration-200 ${
+                location.pathname.startsWith('/respira-preta')
+                  ? 'bg-[#3D1F14] text-[#F5EDE4] border-[#3D1F14]'
+                  : 'border-[#C4634A]/70 text-[#C4634A] font-semibold bg-[#C4634A]/8 hover:bg-[#C4634A]/15 hover:border-[#C4634A]'
+              }`}
+            >
+              <Wind className="h-3.5 w-3.5" />
+              Respira, Preta
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -167,6 +178,14 @@ function Header() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              to="/respira-preta"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 text-base font-semibold px-3 py-2 rounded-lg border border-[#C4634A]/70 text-[#C4634A] bg-[#C4634A]/8 hover:bg-[#C4634A]/15 transition-all duration-200 w-fit"
+            >
+              <Wind className="h-4 w-4" />
+              Respira, Preta
+            </Link>
             <div className="pt-4 border-t border-border">
               {!isAuthenticated ? (
                 <Button asChild className="w-full rounded-full bg-accent text-accent-foreground hover:bg-accent/90">

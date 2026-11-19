@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, CheckCircle2 } from 'lucide-react';
+import { Sparkles, CheckCircle2, Wind, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SectionDivider from '@/components/SectionDivider.jsx';
 import ServiceCard from '@/components/ServiceCard.jsx';
@@ -110,7 +110,7 @@ function HomePage({ previewData }) {
             <span className="inline-block py-1 px-3 rounded-full bg-accent/20 text-accent-foreground font-medium text-sm tracking-wider uppercase mb-6 border border-accent/30 backdrop-blur-sm">
               Bem-vinda ao meu universo
             </span>
-            <h1 className="display-font text-6xl md:text-8xl lg:text-9xl font-semibold text-foreground leading-tight mb-6" style={{ textWrap: 'balance' }}>
+            <h1 className="name-font text-6xl md:text-8xl lg:text-9xl text-foreground leading-tight mb-6" style={{ textWrap: 'balance' }}>
               {heroTitle}
             </h1>
           </motion.div>
@@ -155,7 +155,7 @@ function HomePage({ previewData }) {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((srv, idx) => (
-                <motion.div 
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -166,6 +166,33 @@ function HomePage({ previewData }) {
                   <ServiceCard {...srv} service={srv} />
                 </motion.div>
               ))}
+
+              {/* Card fixo: Respira, Preta */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: services.length * 0.1 }}
+                className="h-full"
+              >
+                <Link to="/respira-preta" className="block h-full">
+                  <div className="h-full flex flex-col rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 transition-all duration-300 hover:shadow-xl" style={{ background: 'linear-gradient(145deg, #3D1F14 0%, #5C2D1E 100%)' }}>
+                    <div className="flex-1 p-6 flex flex-col">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(196, 149, 74, 0.2)' }}>
+                        <Wind className="h-6 w-6" style={{ color: '#E8B89A' }} />
+                      </div>
+                      <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--body-font)', color: '#F5EDE4' }}>Respira, Preta</h3>
+                      <p className="text-sm leading-relaxed flex-1 mb-6" style={{ color: '#DEB896' }}>
+                        Um evento de yoga, respiração e autocuidado pensado para o cuidado de mulheres negras. Um espaço de acolhimento, afeto e descanso.
+                      </p>
+                      <div className="mt-auto flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-200" style={{ border: '1px solid rgba(245, 237, 228, 0.45)', color: '#F5EDE4', background: 'rgba(255,255,255,0.07)' }}>
+                        Conhecer o projeto
+                        <ArrowUpRight className="h-4 w-4" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </section>

@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --body-font: 'Roboto', sans-serif;
+    --name-font-family: 'Dancing Script', cursive;
     --background: 0 0% 100%;
     --foreground: 18 40% 10%;
     --card: 0 0% 100%;
@@ -55,7 +57,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--body-font);
   }
   html {
     scroll-behavior: smooth;
@@ -67,7 +69,13 @@
 }
 
 .heading-font {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--body-font);
+}
+
+.name-font {
+  font-family: var(--name-font-family);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .display-font {
@@ -105,6 +113,39 @@
 
 .admin-title {
   @apply text-2xl font-bold mb-6 text-accent heading-font;
+}
+
+/* ===== RESPIRA PRETA THEME ===== */
+/*
+  Paleta extraída do manual de identidade:
+  #3D1F14 → fundo escuro (bg darker)
+  #5C2D1E → marrom principal (bg dark)
+  #C4634A → terracota (acento primário)
+  #E8B89A → pêssego (acento suave)
+  #DEB896 → areia (texto muted)
+  #F5EDE4 → creme (texto principal)
+*/
+.respira {
+  --background: 14 50% 18%;
+  --foreground: 28 56% 93%;
+  --card: 14 54% 22%;
+  --card-foreground: 28 56% 93%;
+  --popover: 14 54% 22%;
+  --popover-foreground: 28 56% 93%;
+  --primary: 20 55% 72%;
+  --primary-foreground: 14 54% 16%;
+  --secondary: 12 51% 50%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 14 40% 26%;
+  --muted-foreground: 28 35% 65%;
+  --accent: 12 51% 50%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 14 35% 30%;
+  --input: 14 35% 30%;
+  --ring: 20 55% 72%;
+  --radius: 0.75rem;
 }
 
 /* Custom Scrollbar */

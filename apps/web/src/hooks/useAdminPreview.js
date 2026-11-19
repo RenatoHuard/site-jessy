@@ -43,10 +43,11 @@ export function useAdminPreview(tableName, defaultData) {
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, id, value, type, checked } = e.target;
+    const key = name || id;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [key]: type === 'checkbox' ? checked : value,
     }));
   };
 

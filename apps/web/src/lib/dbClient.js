@@ -29,7 +29,7 @@ const getHeaders = async (withAuth = false) => {
 export const dbGet = async (table, params = {}) => {
   const query = new URLSearchParams({ select: '*', limit: '1', ...params });
   const res = await window.fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
-    headers: await getHeaders(),
+    headers: await getHeaders(true),
   });
   if (!res.ok) throw new Error(`${table} GET: ${res.status}`);
   return res.json();
@@ -57,3 +57,22 @@ export const dbInsert = async (table, data) => {
 
 // Helper para uploads autenticados (Storage)
 export const getAuthToken = async () => (await getToken()) || SUPABASE_KEY;
+
+export const uploadToStorage = async (bucket, path, file) => {
+  const token = await getAuthToken();
+  const res = await window.fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': file.type,
+      'x-upsert': 'true',
+    },
+    body: file,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Upload failed ${res.status}: ${text}`);
+  }
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+};

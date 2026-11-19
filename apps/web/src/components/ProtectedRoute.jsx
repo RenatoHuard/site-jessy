@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext.jsx';
 
 const ProtectedRoute = ({ children, requireAdmin = false, requireMember = false }) => {
-  const { isAuthenticated, isAdmin, isMember, loading } = useAuth();
+  const { isAuthenticated, isRealAdmin, isMember, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -19,12 +19,11 @@ const ProtectedRoute = ({ children, requireAdmin = false, requireMember = false 
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireAdmin && !isAdmin) {
+  if (requireAdmin && !isRealAdmin) {
     return <Navigate to="/" replace />;
   }
 
-  // Allow admins to access member routes as well
-  if (requireMember && !isMember && !isAdmin) {
+  if (requireMember && !isMember && !isRealAdmin) {
     return <Navigate to="/" replace />;
   }
 

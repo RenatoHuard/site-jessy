@@ -14,6 +14,9 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewModeState] = useState(() =>
+    localStorage.getItem('viewMode') || 'admin'
+  );
 
   useEffect(() => {
     // Restaura sessão do localStorage na inicialização
@@ -61,6 +64,13 @@ export const AuthProvider = ({ children }) => {
     if (profile) setCurrentUser(prev => ({ ...prev, ...profile }));
   };
 
+  const isRealAdmin = currentUser?.role === 'admin';
+
+  const setViewMode = (mode) => {
+    setViewModeState(mode);
+    localStorage.setItem('viewMode', mode);
+  };
+
   const value = {
     currentUser,
     login,
@@ -68,8 +78,11 @@ export const AuthProvider = ({ children }) => {
     logout,
     refreshProfile,
     isAuthenticated: !!currentUser,
-    isAdmin: currentUser?.role === 'admin',
-    isMember: currentUser?.role === 'member',
+    isRealAdmin,
+    isAdmin: isRealAdmin && viewMode === 'admin',
+    isMember: currentUser?.role === 'member' || (isRealAdmin && viewMode === 'client'),
+    viewMode,
+    setViewMode,
     loading,
   };
 
