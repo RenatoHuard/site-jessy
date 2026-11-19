@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+
+	# Remove trailing slash (ex: /respira-preta/ → /respira-preta)
+	# Evita que o Apache processe como diretório físico e retorne 403
+	RewriteCond %{REQUEST_URI} ^(.+)/$
+	RewriteRule ^ %1 [R=301,L]
+
+	# SPA fallback: serve index.html para tudo que não é arquivo físico
 	RewriteRule ^index\.html$ - [L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ /index.html [L]
