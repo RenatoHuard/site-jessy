@@ -33,7 +33,7 @@ function JrSidebar({ location, onClose, currentUser, onLogout, isMember, isAdmin
   return (
     <aside className={`fixed md:relative top-0 left-0 z-30 h-screen w-64 bg-card border-r border-border flex flex-col flex-shrink-0 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
       {/* Header */}
-      <div className="p-5 border-b border-border flex items-center justify-between">
+      <div className="px-5 h-[112px] border-b border-border flex items-center justify-between">
         <span className="font-bold heading-font text-xl text-primary">Admin Panel</span>
         <button className="md:hidden text-muted-foreground" onClick={onClose}>
           <X className="h-5 w-5" />
@@ -54,9 +54,9 @@ function JrSidebar({ location, onClose, currentUser, onLogout, isMember, isAdmin
             to="/admin/respira-home"
             onClick={onClose}
             className="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all group"
-            style={{ background: '#3D1F14', borderColor: 'rgba(196,99,74,0.5)' }}
+            style={{ background: 'rgba(196,99,74,0.08)', borderColor: 'rgba(196,99,74,0.25)' }}
           >
-            <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-7 w-auto opacity-90 group-hover:opacity-100 transition-opacity" />
+            <span className="text-sm font-semibold truncate" style={{ color: '#9B4A35' }}>Respira, Preta</span>
             <span className="ml-auto w-2.5 h-2.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'rgba(196,99,74,0.7)' }} />
           </Link>
         </div>
@@ -93,15 +93,15 @@ function JrSidebar({ location, onClose, currentUser, onLogout, isMember, isAdmin
 }
 
 // ── Sidebar Respira Preta ───────────────────────────────────────────────────
-function RpSidebar({ location, onClose, currentUser, onLogout, isOpen }) {
+function RpSidebar({ location, onClose, currentUser, onLogout, isOpen, isMember, isAdmin }) {
   return (
     <aside
       className={`fixed md:relative top-0 left-0 z-30 h-screen w-64 flex flex-col flex-shrink-0 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       style={{ background: '#0F0704', borderRight: '1px solid #3D1F14' }}
     >
       {/* Header com logo */}
-      <div className="p-5 flex items-center justify-between" style={{ borderBottom: '1px solid #3D1F14' }}>
-        <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-11 w-auto" />
+      <div className="px-5 h-[112px] flex items-center justify-between" style={{ borderBottom: '1px solid #3D1F14' }}>
+        <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-[72px] w-auto" />
         <button className="md:hidden" style={{ color: '#DEB896' }} onClick={onClose}>
           <X className="h-5 w-5" />
         </button>
@@ -125,7 +125,7 @@ function RpSidebar({ location, onClose, currentUser, onLogout, isOpen }) {
           </Link>
           {/* Respira Preta — ativo */}
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ background: '#3D1F14', borderColor: '#C4634A33' }}>
-            <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-7 w-auto" />
+            <span className="text-sm font-semibold truncate" style={{ color: '#E8B89A' }}>Respira, Preta</span>
             <span className="ml-auto w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#C4634A' }} />
           </div>
         </div>
@@ -176,6 +176,19 @@ function RpSidebar({ location, onClose, currentUser, onLogout, isOpen }) {
           <ArrowLeft className="mr-2 h-4 w-4" />
           Ver site Respira
         </Link>
+        {(isMember || isAdmin) && (
+          <Link
+            to="/members/dashboard"
+            onClick={onClose}
+            className="flex items-center w-full px-3 py-2 rounded-lg text-sm transition-colors"
+            style={{ border: '1px solid #3D1F14', color: '#DEB896', opacity: 0.7 }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.borderColor = '#5C2D1E'; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '0.7'; e.currentTarget.style.borderColor = '#3D1F14'; }}
+          >
+            <User className="mr-2 h-4 w-4" />
+            Área de Membros
+          </Link>
+        )}
         <button
           onClick={onLogout}
           className="flex items-center w-full px-3 py-2 rounded-lg text-sm transition-colors"
@@ -241,40 +254,42 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row overflow-hidden" style={{ background: isRespira ? '#1E0E06' : undefined }}>
+    <div className="min-h-screen flex flex-col" style={{ background: isRespira ? '#1E0E06' : undefined }}>
       <UpdateBanner />
 
-      {/* Mobile header */}
-      <div
-        className="md:hidden p-4 flex items-center justify-between z-20"
-        style={isRespira
-          ? { background: '#0F0704', borderBottom: '1px solid #3D1F14' }
-          : { background: 'hsl(var(--card))', borderBottom: '1px solid hsl(var(--border))' }
-        }
-      >
-        {isRespira
-          ? <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-9" />
-          : <span className="font-bold heading-font text-xl text-primary">Admin Panel</span>
-        }
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          style={isRespira ? { color: '#DEB896' } : undefined}
-          className={isRespira ? '' : 'text-muted-foreground'}
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+        {/* Mobile header */}
+        <div
+          className="md:hidden p-4 flex items-center justify-between z-20"
+          style={isRespira
+            ? { background: '#0F0704', borderBottom: '1px solid #3D1F14' }
+            : { background: 'hsl(var(--card))', borderBottom: '1px solid hsl(var(--border))' }
+          }
         >
-          {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+          {isRespira
+            ? <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-9" />
+            : <span className="font-bold heading-font text-xl text-primary">Admin Panel</span>
+          }
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            style={isRespira ? { color: '#DEB896' } : undefined}
+            className={isRespira ? '' : 'text-muted-foreground'}
+          >
+            {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Sidebar */}
+        {isRespira
+          ? <RpSidebar {...sidebarProps} isOpen={sidebarOpen} />
+          : <JrSidebar {...sidebarProps} isOpen={sidebarOpen} />
+        }
+
+        {/* Main content */}
+        <main className="flex-1 h-[calc(100vh-4rem)] md:h-screen overflow-hidden relative">
+          <Outlet />
+        </main>
       </div>
-
-      {/* Sidebar */}
-      {isRespira
-        ? <RpSidebar {...sidebarProps} isOpen={sidebarOpen} />
-        : <JrSidebar {...sidebarProps} isOpen={sidebarOpen} />
-      }
-
-      {/* Main content */}
-      <main className="flex-1 h-[calc(100vh-4rem)] md:h-screen overflow-hidden relative">
-        <Outlet />
-      </main>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
