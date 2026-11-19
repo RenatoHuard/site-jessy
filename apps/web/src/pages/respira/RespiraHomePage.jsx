@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Wind, Heart, Feather } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 import { dbGet } from '@/lib/dbClient';
 
 const PILLAR_ICONS = [Wind, Heart, Feather];
@@ -45,6 +46,21 @@ export default function RespiraHomePage({ previewData }) {
 
   return (
     <div>
+      <Helmet>
+        <title>Respira, Preta — Yoga, afeto e descanso para mulheres negras</title>
+        <meta name="description" content="Um espaço sagrado de yoga, respiração e autocuidado pensado para o cuidado de mulheres negras. Acolhimento, afeto e descanso." />
+        <meta property="og:title" content="Respira, Preta" />
+        <meta property="og:description" content="Um espaço sagrado de yoga, respiração e autocuidado pensado para o cuidado de mulheres negras." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://jrdancing.com.br/respira-preta" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:image" content="https://jrdancing.com.br/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Respira, Preta" />
+        <meta name="twitter:description" content="Um espaço sagrado de yoga, respiração e autocuidado pensado para o cuidado de mulheres negras." />
+        <meta name="twitter:image" content="https://jrdancing.com.br/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" />
+      </Helmet>
+
       {/* ── Hero ── */}
       <section
         className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden"

@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Users, Sparkles, Calendar, MessageCircle, BookOpen, BookMarked, Youtube, Briefcase } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Users, Sparkles, Calendar, MessageCircle, BookOpen, BookMarked, Youtube, Briefcase, Wind, ArrowUpRight } from 'lucide-react';
 import SectionDivider from '@/components/SectionDivider.jsx';
 import ServiceCard from '@/components/ServiceCard.jsx';
 import { dbGet } from '@/lib/dbClient';
 
-// Map string icon names to actual Lucide components for dynamic rendering
 const iconMap = {
   Users, Sparkles, Calendar, MessageCircle, BookOpen, BookMarked, Youtube, Briefcase
 };
@@ -32,20 +33,20 @@ function ServicesPage({ previewData }) {
 
   const introTitle = data?.intro_title || 'Serviços e Experiências';
   const introDesc = data?.intro_description || 'Escolha o formato ideal para sua jornada. Cada espaço foi criado com cuidado para acolher, ensinar e transformar através da arte e do conhecimento.';
-  
+
   const defaultServices = [
     {
       title: 'Comunidade da Jéssica (venda anual)',
       description: 'Comunidade exclusiva para mulheres que querem explorar dança, leitura e desenvolvimento pessoal.',
       icon: 'Users',
-      image: '',
-      featured: true
+      featured: true,
+      link: ''
     },
     {
       title: 'Aulas temáticas individuais',
       description: 'Aulas de dança personalizadas com foco em história, técnica e expressão.',
       icon: 'Sparkles',
-      image: ''
+      link: ''
     }
   ];
 
@@ -76,24 +77,49 @@ function ServicesPage({ previewData }) {
 
           <SectionDivider className="mb-16" />
 
-          <div className="flex flex-wrap gap-8 justify-center items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {servicesList.map((service, index) => {
               const IconComponent = iconMap[service.icon] || Sparkles;
-              const hasImage = !!service.image;
               return (
-                <div key={index} className={hasImage ? 'shrink-0' : 'flex-1 min-w-[280px] max-w-sm'}>
+                <div key={index} className="h-full">
                   <ServiceCard
                     title={service.title}
                     description={service.description}
                     icon={IconComponent}
                     image={service.image}
                     featured={service.featured}
+                    link={service.link}
                     delay={index * 0.1}
-                    naturalWidth={hasImage}
                   />
                 </div>
               );
             })}
+
+            {/* Card fixo: Respira, Preta */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: servicesList.length * 0.1 }}
+              className="h-full"
+            >
+              <Link to="/respira-preta" className="block h-full">
+                <div className="h-full flex flex-col rounded-xl overflow-hidden border hover:-translate-y-1 transition-all duration-300 hover:shadow-xl" style={{ background: 'linear-gradient(145deg, #3D1F14 0%, #5C2D1E 100%)', borderColor: 'rgba(196,99,74,0.3)' }}>
+                  <div className="flex-1 p-6 flex flex-col">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(196, 149, 74, 0.2)' }}>
+                      <Wind className="h-6 w-6" style={{ color: '#E8B89A' }} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--body-font)', color: '#F5EDE4' }}>Respira, Preta</h3>
+                    <p className="text-sm leading-relaxed flex-1 mb-6" style={{ color: '#DEB896' }}>
+                      Um evento de yoga, respiração e autocuidado pensado para o cuidado de mulheres negras. Um espaço de acolhimento, afeto e descanso.
+                    </p>
+                    <div className="mt-auto flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-200" style={{ border: '1px solid rgba(245, 237, 228, 0.45)', color: '#F5EDE4', background: 'rgba(255,255,255,0.07)' }}>
+                      Conhecer o projeto
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>

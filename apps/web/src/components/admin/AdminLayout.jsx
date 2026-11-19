@@ -47,16 +47,17 @@ function JrSidebar({ location, onClose, currentUser, onLogout, isMember, isAdmin
           {/* JR Dancing — ativo */}
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20">
             <span className="text-sm font-semibold text-primary truncate">Jéssica Rayane</span>
-            <span className="ml-auto w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+            <span className="ml-auto w-2.5 h-2.5 rounded-full bg-primary flex-shrink-0" />
           </div>
           {/* Respira Preta — inativo */}
           <Link
             to="/admin/respira-home"
             onClick={onClose}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-transparent hover:border-[#5C2D1E]/40 hover:bg-[#3D1F14]/10 transition-all group"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all group"
+            style={{ background: '#3D1F14', borderColor: 'rgba(196,99,74,0.5)' }}
           >
-            <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-7 w-auto opacity-75 group-hover:opacity-100 transition-opacity" />
-            <ChevronRight className="ml-auto h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-[#C4634A] transition-colors flex-shrink-0" />
+            <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-7 w-auto opacity-90 group-hover:opacity-100 transition-opacity" />
+            <span className="ml-auto w-2.5 h-2.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'rgba(196,99,74,0.7)' }} />
           </Link>
         </div>
       </div>
@@ -114,18 +115,18 @@ function RpSidebar({ location, onClose, currentUser, onLogout, isOpen }) {
           <Link
             to="/admin"
             onClick={onClose}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-transparent transition-all group"
-            style={{ '--hover-bg': 'rgba(255,255,255,0.05)' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all group"
+            style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.12)' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
           >
-            <span className="text-sm font-medium" style={{ color: '#DEB896', opacity: 0.5 }}>Jéssica Rayane</span>
-            <ChevronRight className="ml-auto h-3.5 w-3.5 flex-shrink-0" style={{ color: '#DEB896', opacity: 0.3 }} />
+            <span className="text-sm font-medium" style={{ color: '#DEB896', opacity: 0.75 }}>Jéssica Rayane</span>
+            <span className="ml-auto w-2.5 h-2.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'rgba(222,184,150,0.45)' }} />
           </Link>
           {/* Respira Preta — ativo */}
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ background: '#3D1F14', borderColor: '#C4634A33' }}>
             <img src="/respira-preta/logos/RP_logo3_horizontal_bicolor_claro.png" alt="Respira, Preta" className="h-7 w-auto" />
-            <span className="ml-auto w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#C4634A' }} />
+            <span className="ml-auto w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#C4634A' }} />
           </div>
         </div>
       </div>

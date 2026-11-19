@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, CheckCircle2, Wind, ArrowUpRight } from 'lucide-react';
+import { Sparkles, CheckCircle2, Wind, ArrowUpRight, Users, Calendar, MessageCircle, BookOpen, BookMarked, Youtube, Briefcase } from 'lucide-react';
+
+const iconMap = { Users, Sparkles, Calendar, MessageCircle, BookOpen, BookMarked, Youtube, Briefcase };
 import { Button } from '@/components/ui/button';
 import SectionDivider from '@/components/SectionDivider.jsx';
 import ServiceCard from '@/components/ServiceCard.jsx';
@@ -62,12 +64,15 @@ function HomePage({ previewData }) {
   const heroTitle = data?.hero_title || 'Jéssica Rayane';
   const heroImg = getImgUrl('hero_image');
   const heroOverlayOpacity = data?.hero_overlay_opacity ?? 70;
+  const heroBgColor = data?.hero_bg_color || '';
 
   const presTitle = data?.presentation_title || 'Uma abordagem pedagógica e artística';
   const presDesc = data?.presentation_description || 'Aulas que vão além do movimento, explorando a história, a técnica e a expressão autêntica de cada corpo.';
   const presImg = getImgUrl('presentation_image');
+  const presBgColor = data?.presentation_bg_color || '';
 
   const services = servicesData?.services || [];
+  const servicesBgColor = data?.services_bg_color || '';
 
   const ctaTitle = data?.cta_title || 'Pronta para começar?';
   const ctaDesc = data?.cta_description || 'Junte-se a nós e descubra um novo mundo de possibilidades.';
@@ -76,10 +81,12 @@ function HomePage({ previewData }) {
   const ctaBtn2Text = data?.cta_button2_text || '';
   const ctaBtn2Link = data?.cta_button2_link || '';
   const ctaImg = getImgUrl('cta_image');
+  const ctaBgColor = data?.cta_bg_color || '';
 
   const commTitle = data?.community_title || 'Nossa Comunidade';
   const commDesc = data?.community_description || 'Espaços acolhedores criados exclusivamente para mulheres se conectarem, compartilharem experiências e crescerem juntas.';
   const commImg = getImgUrl('community_image');
+  const commBgColor = data?.community_bg_color || '';
 
   return (
     <>
@@ -91,20 +98,25 @@ function HomePage({ previewData }) {
       )}
 
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[90dvh] flex items-center justify-center overflow-hidden bg-foreground">
-        <div className="absolute inset-0">
-          <img
-            src={heroImg}
-            alt="Hero Background"
-            className={`w-full h-full object-cover object-top ${data?.hero_parallax ? 'fixed' : ''}`}
-            style={{ opacity: (100 - heroOverlayOpacity) / 100 }}
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" style={{ opacity: heroOverlayOpacity / 100 }} />
-        </div>
-        
+      <section
+        className="relative min-h-[90dvh] flex items-center justify-center overflow-hidden"
+        style={{ backgroundColor: heroBgColor || 'hsl(var(--foreground))' }}
+      >
+        {heroImg && (
+          <div className="absolute inset-0">
+            <img
+              src={heroImg}
+              alt="Hero Background"
+              className={`w-full h-full object-cover object-top ${data?.hero_parallax ? 'fixed' : ''}`}
+              style={{ opacity: (100 - heroOverlayOpacity) / 100 }}
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" style={{ opacity: heroOverlayOpacity / 100 }} />
+          </div>
+        )}
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center mt-20">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <span className="inline-block py-1 px-3 rounded-full bg-accent/20 text-accent-foreground font-medium text-sm tracking-wider uppercase mb-6 border border-accent/30 backdrop-blur-sm">
@@ -118,7 +130,7 @@ function HomePage({ previewData }) {
       </section>
 
       {/* 2. PRESENTATION SECTION (Zig-Zag Left) */}
-      <section className="py-24 bg-background overflow-hidden">
+      <section className="py-24 bg-background overflow-hidden relative isolate" style={presBgColor ? { backgroundColor: presBgColor } : undefined}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
@@ -147,7 +159,7 @@ function HomePage({ previewData }) {
 
       {/* 3. SERVICES SECTION (Bento/Grid) */}
       {services.length > 0 && (
-        <section className="py-24 bg-muted/30">
+        <section className="py-24 bg-muted relative isolate" style={servicesBgColor ? { backgroundColor: servicesBgColor } : undefined}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="heading-font text-3xl md:text-4xl font-bold text-foreground mb-4">Meus Serviços</h2>
@@ -163,7 +175,11 @@ function HomePage({ previewData }) {
                   transition={{ delay: idx * 0.1 }}
                   className="h-full"
                 >
-                  <ServiceCard {...srv} service={srv} />
+                  <ServiceCard
+                    {...srv}
+                    icon={iconMap[srv.icon] || Sparkles}
+                    link={srv.link || ''}
+                  />
                 </motion.div>
               ))}
 
@@ -199,7 +215,7 @@ function HomePage({ previewData }) {
       )}
 
       {/* 4. COMMUNITY SECTION (Zig-Zag Right) */}
-      <section className="py-24 bg-background overflow-hidden">
+      <section className="py-24 bg-background overflow-hidden relative isolate" style={commBgColor ? { backgroundColor: commBgColor } : undefined}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="order-2 lg:order-1">
@@ -234,17 +250,21 @@ function HomePage({ previewData }) {
       </section>
 
       {/* 5. CTA SECTION */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={ctaImg}
-            alt="Call to action background"
-            className={`w-full h-full object-cover object-top ${data?.cta_parallax ? 'fixed' : ''}`}
-            loading="lazy"
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-foreground/80" />
-        </div>
+      <section className="py-32 relative overflow-hidden" style={!ctaImg && ctaBgColor ? { backgroundColor: ctaBgColor } : undefined}>
+        {ctaImg ? (
+          <div className="absolute inset-0">
+            <img
+              src={ctaImg}
+              alt="Call to action background"
+              className={`w-full h-full object-cover object-top ${data?.cta_parallax ? 'fixed' : ''}`}
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-foreground/80" />
+          </div>
+        ) : (
+          <div className="absolute inset-0" style={{ backgroundColor: ctaBgColor || 'hsl(var(--foreground))' }} />
+        )}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center text-background">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <Sparkles className="h-12 w-12 mx-auto mb-8 text-accent opacity-90" />

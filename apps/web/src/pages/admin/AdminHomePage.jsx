@@ -10,11 +10,35 @@ import { FormToggle } from '@/components/admin/FormToggle.jsx';
 import HomePage from '@/pages/HomePage.jsx';
 
 const defaultData = {
-  hero_title: '', hero_parallax: false, hero_image: null, hero_overlay_opacity: 70,
-  presentation_title: '', presentation_description: '', presentation_parallax: false, presentation_image: null,
-  cta_title: '', cta_description: '', cta_button_text: '', cta_button_link: '', cta_button2_text: '', cta_button2_link: '', cta_parallax: false, cta_image: null,
-  community_title: '', community_description: '', community_parallax: false, community_image: null
+  hero_title: '', hero_parallax: false, hero_image: null, hero_overlay_opacity: 70, hero_bg_color: '',
+  presentation_title: '', presentation_description: '', presentation_parallax: false, presentation_image: null, presentation_bg_color: '',
+  services_bg_color: '',
+  cta_title: '', cta_description: '', cta_button_text: '', cta_button_link: '', cta_button2_text: '', cta_button2_link: '', cta_parallax: false, cta_image: null, cta_bg_color: '',
+  community_title: '', community_description: '', community_parallax: false, community_image: null, community_bg_color: '',
 };
+
+function ColorField({ label, id, value, onChange, hint }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm font-medium text-foreground">{label}</label>
+      <div className="flex items-center gap-3">
+        <input
+          type="color"
+          value={value || '#ffffff'}
+          onChange={(e) => onChange(id, e.target.value)}
+          className="w-10 h-10 cursor-pointer rounded border border-border p-0.5 bg-transparent"
+        />
+        <span className="text-sm font-mono text-muted-foreground">{value || 'padrão'}</span>
+        {value && (
+          <button type="button" onClick={() => onChange(id, '')} className="text-xs text-destructive hover:underline ml-auto">
+            Limpar
+          </button>
+        )}
+      </div>
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+}
 
 export default function AdminHomePage() {
   const {
@@ -43,6 +67,7 @@ export default function AdminHomePage() {
         <div className="space-y-4">
           <FormField label="Título Principal" id="hero_title" value={formData.hero_title} onChange={handleChange} />
           <FormImageUpload label="Imagem de Fundo" id="hero_image" currentImage={formData.hero_image} onChange={handleChange} />
+          <ColorField label="Cor de fundo (alternativa à foto)" id="hero_bg_color" value={formData.hero_bg_color} onChange={handleCustomChange} hint="Usada quando não há foto de fundo" />
           <div className="space-y-2 pt-2">
             <label className="text-sm font-medium text-foreground">
               Opacidade do Overlay: <span className="text-primary font-bold">{formData.hero_overlay_opacity ?? 70}%</span>
@@ -68,12 +93,20 @@ export default function AdminHomePage() {
           <FormField label="Título" id="presentation_title" value={formData.presentation_title} onChange={handleChange} />
           <FormTextarea label="Descrição" id="presentation_description" value={formData.presentation_description} onChange={handleChange} />
           <FormImageUpload label="Imagem" id="presentation_image" currentImage={formData.presentation_image} onChange={handleChange} />
+          <ColorField label="Cor de fundo da seção" id="presentation_bg_color" value={formData.presentation_bg_color} onChange={handleCustomChange} hint="Sobrescreve o branco padrão da seção" />
           <FormToggle label="Efeito Parallax" id="presentation_parallax" checked={formData.presentation_parallax} onChange={handleChange} />
         </div>
       </div>
 
       <div className="admin-section">
-        <h2 className="text-xl font-semibold mb-4 text-accent">3. Call to Action (CTA)</h2>
+        <h2 className="text-xl font-semibold mb-4 text-accent">3. Seção de Serviços</h2>
+        <div className="space-y-4">
+          <ColorField label="Cor de fundo da seção" id="services_bg_color" value={formData.services_bg_color} onChange={handleCustomChange} hint="Sobrescreve o cinza claro padrão da seção de serviços" />
+        </div>
+      </div>
+
+      <div className="admin-section">
+        <h2 className="text-xl font-semibold mb-4 text-accent">4. Call to Action (CTA)</h2>
         <div className="space-y-4">
           <FormField label="Título" id="cta_title" value={formData.cta_title} onChange={handleChange} />
           <FormTextarea label="Descrição" id="cta_description" value={formData.cta_description} onChange={handleChange} />
@@ -86,16 +119,18 @@ export default function AdminHomePage() {
             <FormField label="Link Botão 2" id="cta_button2_link" value={formData.cta_button2_link} onChange={handleChange} />
           </div>
           <FormImageUpload label="Imagem de Fundo" id="cta_image" currentImage={formData.cta_image} onChange={handleChange} />
+          <ColorField label="Cor de fundo (alternativa à foto)" id="cta_bg_color" value={formData.cta_bg_color} onChange={handleCustomChange} hint="Usada quando não há foto de fundo" />
           <FormToggle label="Efeito Parallax" id="cta_parallax" checked={formData.cta_parallax} onChange={handleChange} />
         </div>
       </div>
 
       <div className="admin-section">
-        <h2 className="text-xl font-semibold mb-4 text-accent">4. Comunidade</h2>
+        <h2 className="text-xl font-semibold mb-4 text-accent">5. Comunidade</h2>
         <div className="space-y-4">
           <FormField label="Título" id="community_title" value={formData.community_title} onChange={handleChange} />
           <FormTextarea label="Descrição" id="community_description" value={formData.community_description} onChange={handleChange} />
           <FormImageUpload label="Imagem de Fundo" id="community_image" currentImage={formData.community_image} onChange={handleChange} />
+          <ColorField label="Cor de fundo da seção" id="community_bg_color" value={formData.community_bg_color} onChange={handleCustomChange} hint="Sobrescreve o branco padrão da seção" />
           <FormToggle label="Efeito Parallax" id="community_parallax" checked={formData.community_parallax} onChange={handleChange} />
         </div>
       </div>

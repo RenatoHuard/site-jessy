@@ -9,7 +9,7 @@ function Footer() {
   const { config } = useSiteConfig();
 
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground relative isolate">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           <div className="md:col-span-5">
@@ -78,7 +78,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div id="footer-bottom-bar" className="border-t border-primary-foreground/20 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-primary-foreground/80 text-sm">
             © {currentYear} Jéssica Rayane. Todos os direitos reservados.
           </p>

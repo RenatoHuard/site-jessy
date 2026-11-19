@@ -25,12 +25,16 @@ export default function WhatsAppButton({ color, variant }) {
   }, [variant]);
 
   useEffect(() => {
-    const footer = document.querySelector('footer');
-    if (!footer) return;
+    const bar = document.querySelector('#footer-bottom-bar');
+    if (!bar) return;
     const update = () => {
-      const rect = footer.getBoundingClientRect();
+      const rect = bar.getBoundingClientRect();
       const vh = window.innerHeight;
-      setBottom(rect.top < vh ? vh - rect.top + 16 : 24);
+      if (rect.top >= 0 && rect.top < vh) {
+        setBottom(vh - rect.top + 16);
+      } else {
+        setBottom(24);
+      }
     };
     window.addEventListener('scroll', update, { passive: true });
     update();
